@@ -12,6 +12,9 @@ const App = () => {
   const [ currentQuestionIndex, setCurrentQuestionIndex ] = useState(0)
   const [ isFinished, setIsFinished ] = useState(false);
   const [ answerStatus, setAnswerStatus ] = useState('');
+  const [ score, setScore ] = useState(0);
+  const [ attemptCount, setAttemptCount ] = useState(0);
+  const [ chosenAnswers, setChosenAnswers ] = useState([])
 
   useEffect(() => {
     function shuffleAnswers(answers) {
@@ -71,18 +74,22 @@ const App = () => {
   }
 
   function handleNextQuizClicked() {
+    // setAttemptCount(attemptCount + 1);
     setCurrentQuizIndex(currentQuizIndex + 1);
     setCurrentQuestionIndex(0);
     setAnswerStatus('');
+    setScore(0);
     setIsFinished(false);
   }
 
-  console.log('qa ', quizzes[currentQuizIndex]);
+  // console.log('qa ', quizzes[currentQuizIndex]);
   
-  function checkAnswer(selectedAnswer, correctAnswer) {
+  function checkAnswer(e, selectedAnswer, correctAnswer) {
+    e.preventDefault();
     console.log('checking answer');
     if (selectedAnswer === correctAnswer) {
       setAnswerStatus('Correct!');
+      setScore(score + 1);
     } else {
       setAnswerStatus('Incorrect...');
     }
@@ -100,12 +107,13 @@ const App = () => {
           <div>
             {!isFinished ? (
               <div>
-                {/* {console.log(currentQuizIndex, currentQuestionIndex)} */}
                 {currentQuiz.questions[currentQuestionIndex].text}
                 <div>
                   {currentQuiz.questions[currentQuestionIndex].allAnswers.map((answer, i) => {
                     return (
-                    <div key={i} onClick={() => checkAnswer(answer, currentQuiz.questions[currentQuestionIndex].correctAnswer)}>{answer}</div>
+                    <li type="A" key={i} onClick={(e) => {
+                      checkAnswer(e, answer, currentQuiz.questions[currentQuestionIndex].correctAnswer)}}
+                      >{answer}</li>
                     )
                   })}
                 </div>
@@ -114,11 +122,21 @@ const App = () => {
             </div>
               ) : (
                 <div>
-                  <div>You got x out of {quizzes[currentQuizIndex].length} questions right.</div>
+                  <div>You got {score} out of {currentQuiz.questions.length} questions right.</div>
                   <div>{getMessage()}</div>
+                  <div>This was attempt number {attemptCount}</div>
+                  <div>
+                    You had:
+                    {currentQuiz.questions.map((question, index) => {
+                      return <li key={index}>{question.text} \\selected answer\\ </li>
+                    })}
+                  </div>
                   {currentQuizIndex + 1 < quizzes.length ? 
                     (
-                      <button onClick={handleNextQuizClicked}>Next</button>
+                      <div>
+                        <button onClick={handleNextQuizClicked}>Next</button>
+                        <button>Retake</button>
+                      </div>
                     ) : null
                   }
                 </div>
