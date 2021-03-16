@@ -14,13 +14,13 @@ const Quiz = ({
   updateIsRequiredDone
 }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [answerStatus, setAnswerStatus] = useState('');
   const [isAnswered, setIsAnswered] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   
   // variables to be displayed in summary
   const [score, setScore] = useState(0);
   const [attempts, setAttempts] = useState(1);
-  const [answerStatus, setAnswerStatus] = useState('');
 
   useEffect(() => {
     setScore(0);

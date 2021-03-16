@@ -18,26 +18,16 @@ This project can be imported into CodeSandbox
 `npm start` 
 
 ### Approach
-I started by combining the `correctAnswer` and `incorrectAnswers` from the data into a single array.
 
-The `App` component deals with the overall state of the quizzes - indexing, tracking if quizzes exist, adding quizzes
+The `App` component deals with the overall state of the quizzes - indexing, tracking if quizzes exist, adding quizzes.  The first step was to load the quizzes, then modify it to a usable format by combining the `correctAnswer` and `incorrectAnswers` from the data into a single array of all answers to be displayed for each Question.  
 
-The `Quiz` component handles the state of a single quiz and its questions including the summary data
+This layer handles the current quiz to be displayed, and passes the quiz data (title, questions, handleNextQuiz).  I also included variables to track if the quiz to display was the last one in the original list of quizzes, and if it was the final quiz of the App, so that the `Summary` pages could display and handle the correct actions (get next quizzes, retake, get more quizzes, prevent next when out of quizzes)
 
-The `Question` componenet handles the state of a single question
+Adding Delighter A added a layer of complexity to this component - I added variables to track whether all questions were correct as well as a function to do this calculation.  I also added a function to check if the last of the first set of quizzes was done.  This involved passing data about the current Quiz up to the App layer, such as if a quiz was done with its last question, which is not the 'React' way, but I thought it made more sense than to track each Quiz's state in the parent layer.  The data was used to make calculations about the quizzes as a whole, since calculating the perfect scores involves tracking through each quiz. 
 
-The `Summary` component displays the final 'slide' of a `Question`
-### Feature Requirements
-   - A random encouragement message _(use `getMessage` from `data/messages.js`)_.
 
-### Delighters
+The `Quiz` component handles the state of a single quiz.  It determines whether to display a question (the question text, and answer options) or the summary page.  It handles all the quiz actions, like retaking or getting the next question in the quiz, as well as checking for answer validity.
 
-Originally I wanted to write tests, but didn't feel I had time to write them very thoroughly, so I decided to go with delighters A and B.
+The `Question` component handles the state of a single question.  It grabs the selected answer, and passes it up through function calls, before getting the result to display.  It handles the styling of correct and incorrect answers.
 
-- A: Once both of the quizzes have gotten all answers correct, use `getMoreQuizzes` to load in more quizzes that the user can take.
-- B: In addition to the "Next" button after taking a quiz, display the number of times the quiz has been taken along with a "Retake" button.
-
-### Submission Requirements
-
-Please give a high-level summary of the technical decisions you made in `DOCS.md`.
-It shouldn't be a full essay - just a few sentences explaining your code's architecture and tradeoffs.
+The `Summary` component displays the final 'slide' of a `Question` with properties passed down from the Quiz layer (score, quiz attempts) and respective buttons to get next quiz or retake (the second delighter I implemented).  This is the only stateless component in this application.
