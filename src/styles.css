@@ -2,3 +2,101 @@
   font-family: sans-serif;
   text-align: center;
 }
+
+.question-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.question {
+  width: fit-content;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+.answers {
+  min-width: fit-content;
+  width: 35%;
+  margin: auto;
+}
+
+.answer-option {
+  min-width: 100px;
+  line-height: min(24px);
+  vertical-align: middle;
+  text-align: left;
+}
+
+.answer-option button {
+  border: none;
+  background-color: transparent;
+  font-family : inherit;
+  font-size: 1em;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
+
+.answer-option button:disabled {
+  color: #000;
+  cursor: not-allowed;
+}
+
+.answer-option.correct {
+  border: 1px solid green;
+}
+
+.answer-option.incorrect {
+  border: 1px solid red;
+  text-decoration: line-through;
+}
+
+.answer-option.incorrect button {
+  text-decoration: line-through;
+}
+
+.answer-status {
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-style: italic;
+}
+
+.summary-page {
+  width: 100vw;
+  height: 100vh;
+}
+
+.summary {
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+span.number {
+  font-weight: bold;
+}
+
+.button-container {
+  min-height: 40px;
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  margin: auto;
+}
+
+.button-container button {
+  height: 35px;
+  min-width: 100px;
+  border: 1px solid black;
+  border-radius: 3px;
+  background-color: transparent;
+  font-family : inherit;
+  font-size: 1em;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
